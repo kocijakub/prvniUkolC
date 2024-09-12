@@ -18,7 +18,11 @@ int main(void) {
             printf("%f",first*second);
             break;
         case '/':
-            printf("%f",first/second);
+            if(second == 0){
+                fprintf(stderr,"ty možná umíš dělit nulou ale tenhle program fakt ne");
+            }else{
+                printf("%f",first/second);
+            }
     }
     return 0;
 }
