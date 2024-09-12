@@ -1,10 +1,6 @@
 #include <stdio.h>
 
 
-float circleAreaCalc(float radius){
-    return 3.14 * radius * radius;
-}
-
 int main(void) {
     printf("napis vypocet:");
     float first,second;
