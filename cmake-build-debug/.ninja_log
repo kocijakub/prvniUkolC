@@ -1,0 +1,12 @@
+# ninja log v6
+16	76	7478307269902099	CMakeFiles/Ceecko.dir/main.c.obj	d3bda495ca378db0
+83	179	7478302004432817	Ceecko.exe	de206c7eef4fe500
+22	85	7478306728624283	CMakeFiles/Ceecko.dir/Kalkulacka.c.obj	98539d42016ab9de
+13	244	7478307523593978	build.ninja	301ca4690f5c9721
+20	96	7478307524352568	Ceecko.exe	de206c7eef4fe500
+10	73	7478307699884817	CMakeFiles/Ceecko.dir/main.c.obj	d3bda495ca378db0
+74	152	7478307700518169	Ceecko.exe	de206c7eef4fe500
+4	68	7478308213022994	CMakeFiles/Ceecko.dir/main.c.obj	d3bda495ca378db0
+68	146	7478308213667426	Ceecko.exe	de206c7eef4fe500
+14	74	7478308329293929	CMakeFiles/Ceecko.dir/main.c.obj	d3bda495ca378db0
+74	153	7478308329884450	Ceecko.exe	de206c7eef4fe500
