@@ -1,57 +1,101 @@
 #include <stdio.h>
-#include <windows.h>
+#include <malloc.h>
+#include <string.h>
 
-void drawWalls(int size, int height, int fenceSize){
-    size = size % 2 == 0 ? size + 1 : size;
-    for (int i = 0; i < height; i++) {
-        for(int j = 0; j < size; j++){
-            if(i == 0 || i == height-1 || j == 0 || j == size-1){
-                printf("*");
-            }else{
-                printf(" ");
-            }
-        }
-        if(i != 0){
-            int endingNum;
-            for (int j = 0; j < fenceSize; ++j) {
-                if(j % 2 == 0){
-                    printf("-");
+struct User{
+    char * jmeno;
+    char * prijmeni;
+    char * email;
+    int vek;
+};
+struct User createUser(char * jmeno, char * prijmeni,char * email, int vek){
+    struct User temp;
+    temp.jmeno = jmeno;
+    temp.prijmeni = prijmeni;
+    temp.email = email;
+    temp.vek = vek;
+    return temp;
+}
+
+int main (){
+    struct User * users[30] = {NULL};
+    int numOfUsers = 0;
+    int jmenoS,prijmeniS,emailS;
+    int vek;
+    struct User * fuser = (struct User *)malloc(sizeof(struct User));
+    *fuser = createUser("jakub","koci","gmail",18);
+    users[0] = fuser;
+    while(true){
+        printf("[0] - vytvor uzivatele\n[1] - odeber uzivatele\n[2] - vypis vsechny uzivatele\n[3] - exit");
+        int input;
+        scanf("\n%d",&input);
+        switch(input){
+            case 0:
+                if(numOfUsers != 30){
+                    printf("%s","napis velikost a nazev jmena:");
+                    scanf("%d",&jmenoS);
+                    char * name = malloc(sizeof(char) * jmenoS + 1);
+                    scanf("%s", name);
+
+                    printf("%s","napis velikost a nazev prijmeni");
+                    scanf("%d",&prijmeniS);
+                    char * lastName = malloc(sizeof(char) * prijmeniS + 1);
+                    scanf("%s",lastName);
+
+                    printf("%s","napis velikost a nazev emailu");
+                    scanf("%d",&emailS);
+                    char * email = malloc(sizeof(char) * emailS + 1);
+                    scanf("%s",email);
+
+                    printf("%s","napis vek:");
+                    scanf("%d",&vek);
+
+                    struct User *user = (struct User *)malloc(sizeof(struct User));
+                    *user = createUser(name, lastName, email, vek);
+                    bool isAdded = false;
+                    for(int i = 0; i < 30; i++){
+                        if(!isAdded){
+                            if(users[i] == NULL){
+                                isAdded = true;
+                                users[i] = user;
+                                numOfUsers++;
+                                printf("\nuzivatel byl pridan do seznamu\n");
+                                free(user);
+                                break;
+                            }
+                        }
+                    }
                 }else{
-                    printf("|");
+                    printf("maximum uzivatelu, nelze pridat dalsiho");
                 }
-                if(j == fenceSize - 1) endingNum = j;
-            }
-            if(endingNum % 2 == 0)printf("|");
+                break;
+            case 1:
+                int nameSize;
+                printf("napis velikost a jmeno");
+                scanf("%d",&nameSize);
+                char * name = malloc(sizeof(char) * nameSize + 1);
+                scanf("%s",&name);
+                for(int i = 0;i < 30; i++){
+                    if(strcmp(users[i]->jmeno,name) == 0){
+                        users[i] = NULL;
+                        numOfUsers--;
+                        free(name);
+                        printf("\nuzivatel byl smazan\n");
+                    }
+                }
+                printf("\ntento uzivatel neni v seznamu\n");
+                break;
+            case 2:
+                for(int i = 0; i < 30; i++){
+                    if(users[i] != NULL){
+                        printf("%s\n",users[i]->jmeno);
+                    }
+                }
+                printf("\n");
+                break;
+            case 3: exit(0);
+            default: printf("invalid input,try again");
+        }
 
-        }
-        printf("\n");
     }
-}
-void drawRoof(int size){
-    int center = size / 2;
-    int j = 0;
-    for(int height = 0; height < size / 2 + 1; height++){
-        for(int index = 0; index <= size; index++){
-            if(index == center + j ||index == center - j){
-                printf("*");
-            }else{
-                printf(" ");
-            }
-        }
-        j++;
-        printf("\n");
-    }
-}
-int main(void) {
-    int roofSize;
-    int houseHeight;
-    int fenceSize;
-    printf("napis velikost strechy: \n");
-    scanf("%d",&roofSize);
-    printf("napis velikost domu: \n");
-    scanf("%d", &houseHeight);
-    printf("napis velikost plotu: \n");
-    scanf("%d",&fenceSize);
-    drawRoof(roofSize);
-    drawWalls(roofSize,houseHeight,fenceSize);
 }
