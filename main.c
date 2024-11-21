@@ -1,85 +1,50 @@
-#include <ctype.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-char * scanStr(){
-    char c;
-    int sizeOfArr = 0;
-    char * str = malloc(sizeof(char) * 4);
-    while(c != '.'){
-        scanf("%c",&c);
-        char * temp =   realloc(str,(sizeOfArr + 1) * sizeof(char));
-        str = temp;
-        str[sizeOfArr] = c;
-        sizeOfArr++;
-    }
+void bubbleSort(int *list, int size) {
+    bool sorted = false;
 
-    return str;
-}
-int addToNum(int finalNum,int num, char op){
-    switch(op){
-        case '+':
-            finalNum += num;
-            break;
-        case '-':
-            finalNum -= num;
-            break;
-        case '*':
-            finalNum *= num;
-            break;
-        case '/':
-            finalNum /= num;
-            break;
-    }
-    return finalNum;
-}
+    while (!sorted) {
+        sorted = true;
+        for (int i = 1; i < size; i++) {
+            int *num1 = &list[i - 1];
+            int *num2 = &list[i];
 
-char changeOp(char newOp){
-    if(newOp == '+' || newOp == '-' || newOp == '*' || newOp == '/'){
-        return newOp;
-    }else{
-        printf("wrong input");
-        exit(0);
-    }
-}
-int calculate(char * input){
-    char numbers[] = {'*','*','*','\0'};
-    size_t numSize = sizeof numbers;
-    int finalNum = 0;
-    char op = '+';
-    int num = 0;
-    for (int i = 0; input[i] != '.'; i++){
-        if(isdigit(input[i])){
-            for (int j = 0; j < numSize; j++) {
-                if(numbers[j] == '*'){
-                    numbers[j] = input[i];
-                    break;
-                }
+            if (*num1 > *num2) {
+                int temp = *num1;
+                *num1 = *num2;
+                *num2 = temp;
+
+                sorted = false;
             }
-        }else{
-            for(int j = 0; numbers[j] != '\0'; j++){
-                if(isdigit(numbers[j])){
-                    num = num * 10 + (numbers[j] - '0');
-                    numbers[j] = '*';
-                }
-            }
-            finalNum = addToNum(finalNum,num,op);
-            num = 0;
-            op = changeOp(input[i]);
         }
     }
-    for(int j = 0; numbers[j] != '\0'; j++){
-        if(isdigit(numbers[j])){
-            num = num * 10 + (numbers[j] - '0');
-            numbers[j] = '*';
+}
+
+void selectionSort(int *list, int size) {
+    for (int index = 0; index < size - 1; index++) { // Iterate until the second-to-last element
+        int minIndex = index; // Assume the current index has the smallest value
+        for (int i = index + 1; i < size; i++) { // Look for the smallest value in the unsorted portion
+            if (list[i] < list[minIndex]) {
+                minIndex = i; // Update minIndex if a smaller value is found
+            }
+        }
+        if (index != minIndex) { // Swap only if a new minimum was found
+            int temp = list[index];
+            list[index] = list[minIndex];
+            list[minIndex] = temp;
         }
     }
-    finalNum = addToNum(finalNum,num,op);
-    return(finalNum);
 }
+
+
 int main() {
-    printf("napis matematickou ulohu, nezapomen ji ukoncit teckou!\n");
-    char * input = scanStr();
-    int num = calculate(input);
-    printf("%d",num);
+    int list[] = {5, 3, 8, 6, 2};
+    int size = sizeof(list) / sizeof(list[0]);
+    //bubbleSort(list, size);
+    selectionSort(list, size);
+    printf("sorted list: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", list[i]);
+    }
+    return 0;
 }
